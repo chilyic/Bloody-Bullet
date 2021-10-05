@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class LookAtMouse : MonoBehaviour
 {
-    [SerializeField]
-    Camera _camera;
-    private static Vector3 targetPoint;
-    void Update()
+    [SerializeField] Camera _camera;
+    private Vector3 _targetPoint;
+
+    private void Update()
     {
         Plane playerPlane = new Plane(Vector3.up, transform.position);
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-        if (playerPlane.Raycast(ray, out float hitdist) && PlayerController.isLife)
+        if (playerPlane.Raycast(ray, out float hitdist) && PlayerController.isLife && Time.timeScale == 1)
         {
-            targetPoint = ray.GetPoint(hitdist);
-            Debug.DrawLine(ray.origin, targetPoint, Color.green);
-            transform.LookAt(new Vector3(targetPoint.x, targetPoint.y, targetPoint.z));
+            _targetPoint = ray.GetPoint(hitdist);
+            Debug.DrawLine(ray.origin, _targetPoint, Color.green);
+            
+            transform.LookAt(new Vector3(_targetPoint.x, _targetPoint.y, _targetPoint.z));
         }
     }
-
-    //public static void StopLooking() => targetPoint = new Vector3(0,0,0);
 }

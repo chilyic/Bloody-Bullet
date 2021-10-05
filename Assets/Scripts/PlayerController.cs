@@ -15,23 +15,25 @@ public class PlayerController : MonoBehaviour
     private bool _isDropMag = false;
     private Vector3 _moveVector;
     private static CharacterController _controller;
-    public static Animator animator;
     private Vector3 _camForward;
     private Vector3 _moveInput;
     private float _forwardAmount;
     private float _strafeAmount;
     private AudioSource _audio;
-    public static bool isLife = true;
+
+    public static Animator animator;
+    public static bool isLife;
     
-    void Start()
+    private void Start()
     {
+        isLife = true;
         animator = GetComponent<Animator>();
         _moveVector = Vector3.zero;
         _controller = GetComponent<CharacterController>();
         _audio = GetComponent<AudioSource>();
     }
     
-    void Update()
+    private void Update()
     {
         if (isLife)
         {
@@ -113,6 +115,6 @@ public class PlayerController : MonoBehaviour
         animator.Play("Death");
 
         yield return new WaitForSeconds(3);        
-        _interface.EndGameScreen(ResultScreen.lose);
+        _interface.EndGameScreen();
     }
 }

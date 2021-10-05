@@ -103,7 +103,8 @@ MonoBehaviour:
     type: 3}
   _interface: {fileID: 0}
   _audio: {fileID: 8897535342034328753}
-  noAmmoClip: {fileID: 8300000, guid: 95ae5ef19f2f49d4eb37981546d057cc, type: 3}
+  _noAmmoClip: {fileID: 8300000, guid: 95ae5ef19f2f49d4eb37981546d057cc, type: 3}
+  _ShotClip: {fileID: 8300000, guid: 0e36808b82b8c9746bf59ff5dd747007, type: 3}
 --- !u!82 &8897535342034328753
 AudioSource:
   m_ObjectHideFlags: 0
@@ -114,7 +115,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d1304e787f01fe94391d21ffbc3df162, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

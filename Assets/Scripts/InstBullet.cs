@@ -12,18 +12,22 @@ public class InstBullet : MonoBehaviour
     [SerializeField] private AnimationClip _reloadClip;
     [SerializeField] private Interface _interface;
     [SerializeField] private AudioSource _audio;
-    
-    public AudioClip noAmmoClip;
-    public static bool canShoot = true;
-    public static int ammo = 40;
-    public static int totalAmmo = 100;
+    [SerializeField] private AudioClip _noAmmoClip;
+    [SerializeField] private AudioClip _ShotClip;
+
+    public static bool canShoot;
+    public static int ammo;
+    public static int totalAmmo;
     public static int fullMag;
+    private bool _plusAmmo = true;
 
     private void Start()
     {
+        canShoot = true;
+        ammo = 50;
         fullMag = ammo;
         totalAmmo = 100;
-        _interface.ammoText.text = $"Ammo {totalAmmo}";
+        _interface.ammoText.text = $"{totalAmmo}";
     }
     private void Update()
     {
@@ -34,7 +38,13 @@ public class InstBullet : MonoBehaviour
                 if (ammo > 0)
                     StartCoroutine(Shoot());
                 else
-                    _audio.PlayOneShot(noAmmoClip);
+                    if (Input.GetMouseButtonDown(0))
+                    _audio.PlayOneShot(_noAmmoClip);
+            }
+
+            if (totalAmmo == 0 && ammo == 0)
+            {
+                StartCoroutine(PlusAmmo());
             }
         }
     }
@@ -45,7 +55,7 @@ public class InstBullet : MonoBehaviour
         PlayerController.animator.Play("Firing");
         _flash.Play();
         _mainFlash.Play();
-        _audio.Play();
+        _audio.PlayOneShot(_ShotClip);
         ammo--;
         _interface.ammoSlider.value = ammo;
 
@@ -53,7 +63,7 @@ public class InstBullet : MonoBehaviour
         canShoot = true;        
     }
 
-     public IEnumerator Reload()
+    public IEnumerator Reload()
     {
         canShoot = false;
         yield return new WaitForSeconds(_reloadClip.length);
@@ -68,9 +78,22 @@ public class InstBullet : MonoBehaviour
             ammo += totalAmmo;
             totalAmmo = 0;
         }
-        
-        _interface.ammoText.text = $"Ammo {totalAmmo}";
+
+        _interface.ammoText.text = $"{totalAmmo}";
         _interface.ammoSlider.value = ammo;
         canShoot = true;
+    }
+
+    private IEnumerator PlusAmmo()
+    {
+        while (ammo < 20 && _plusAmmo)
+        {
+            _plusAmmo = false;
+            yield return new WaitForSeconds(0.5f);
+            ammo++;
+            _interface.ammoText.text = $"{totalAmmo}";
+            _interface.ammoSlider.value = ammo;
+            _plusAmmo = true;            
+        }
     }
 }

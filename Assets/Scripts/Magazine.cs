@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class Magazine : MonoBehaviour
 {
-    public float time = 0.9f;
-    void Start()
+    [SerializeField] private float _time = 0.9f;
+
+    private void Start()
     {
         Destroy(this.gameObject, 5);
     }
 
     private void FixedUpdate()
     {
-        if (time > 0)
+        if (_time > 0)
         {
             transform.Translate(Vector3.forward * 3 * Time.fixedDeltaTime);
-            time -= Time.fixedDeltaTime;
+            _time -= Time.fixedDeltaTime;
         }
     }
 }

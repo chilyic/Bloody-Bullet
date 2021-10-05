@@ -9,33 +9,36 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private EnemyPunch _ep;
     [SerializeField] private Bullet _bullet;
     [SerializeField] private float _distanceToTarget = 1.4f;
+    [SerializeField] private GameObject[] _boxes;
+    [SerializeField] private float _speed = 3;
+    [SerializeField] private float _health = 100;
+    [SerializeField] private float _armor = 0;
+    [SerializeField] private int _point = 3;
+    [SerializeField] private float _destroyDelayTime = 2;
 
-    public Animator animator;
-    public float speed = 3;
-    public float health = 100;
-    public float armor = 0;
-    public int point = 3;
-    public float damage = 10;
-    public float delayTime = 2;
-    public bool canMove = true;
-    public GameObject _target;
     public NavMeshAgent agent;
+    public Animator animator;    
+    public float damage = 10;    
+    public bool canMove = true;
 
-    void Start()
+    private GameObject _target;
+
+    private void Start()
     {
         _target = GameObject.FindWithTag("Player");
         agent.enabled = true;
         agent.destination = _target.transform.position;
+        agent.speed = _speed;
     }
 
     private void Update()
     {
-        if (health > 0 && canMove)
+        if (_health > 0 && canMove)
         {
             this.transform.LookAt(_target.transform);
             if (PlayerController.isLife)
             {
-                animator.SetFloat("Move", speed, 0.1f, Time.deltaTime);
+                animator.SetFloat("Move", _speed, 0.1f, Time.deltaTime);
 
                 if (Vector3.Distance(transform.position, _target.transform.position) < _distanceToTarget)
                     StartCoroutine(_ep.Attack());
@@ -54,9 +57,9 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Bullet"))
         {
-            health -= _bullet.damage - _bullet.damage / 100 * armor;
+            _health -= _bullet.damage - _bullet.damage / 100 * _armor;
             
-            if (health <= 0)
+            if (_health <= 0)
             {
                 Death();
             }
@@ -70,9 +73,20 @@ public class EnemyController : MonoBehaviour
         _col.isTrigger = true;
         _ep.punchCollider.enabled = false;
         animator.Play("Death");
-        ScoreSystem.score += point;
-        ScoreSystem.totalScore += point;
-        ScoreSystem.scoreText.text = $"Score = {ScoreSystem.score}";
-        Destroy(gameObject, delayTime);
+        ScoreSystem.score += _point;
+        ScoreSystem.scoreText.text = $"{ScoreSystem.score}";
+        StartCoroutine(Dead());
+    }
+
+    private IEnumerator Dead()
+    {
+        yield return new WaitForSeconds(_destroyDelayTime);
+        Destroy(gameObject);
+        int rand = Random.Range(0, 15);
+
+        if (rand < 5)
+            Instantiate(_boxes[0], transform.position, Quaternion.identity);
+        if (rand == 14)
+            Instantiate(_boxes[1], transform.position, Quaternion.identity);
     }
 }

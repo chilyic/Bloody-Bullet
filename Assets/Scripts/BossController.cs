@@ -8,36 +8,35 @@ public class BossController : MonoBehaviour
     [SerializeField] private BossAttack _bossAttack;
     [SerializeField] private Bullet _bullet;
     [SerializeField] private float _distanceToTarget = 4.5f;
+    [SerializeField] private float _speed = 2;
+    [SerializeField] private float _health = 500;
+    [SerializeField] private float _armor = 50;
+    [SerializeField] private int _point = 30;
+    [SerializeField] private float _delayTime = 7;
 
-    private Interface _interface;
-
-    public Animator animator;
-    public float speed = 2;
-    public float health = 600;
-    public float armor = 90;
-    public int point = 50;
     public float damage = 35;
-    public float delayTime = 7;
-    public bool canMove = true;
-    public GameObject _target;
+    public Animator animator;
     public NavMeshAgent agent;
+    public static int bossesKilled;
+    public static bool canMove = true;
+    private GameObject _target;
 
-    void Start()
+    private void Start()
     {
         _target = GameObject.FindWithTag("Player");
         agent.enabled = true;
         agent.destination = _target.transform.position;
-        _interface = FindObjectOfType<Interface>();
+        bossesKilled = 0;
     }
 
     private void Update()
     {
-        if (health > 0 && canMove)
+        if (_health > 0 && canMove)
         {
             this.transform.LookAt(_target.transform);
             if (PlayerController.isLife)
             {
-                animator.SetFloat("Move", speed, 0.1f, Time.deltaTime);
+                animator.SetFloat("Move", _speed, 0.1f, Time.deltaTime);
 
                 if (Vector3.Distance(transform.position, _target.transform.position) < _distanceToTarget)
                     StartCoroutine(_bossAttack.Attack());
@@ -52,13 +51,13 @@ public class BossController : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Bullet"))
         {
-            health -= _bullet.damage - _bullet.damage / 100 * armor;
+            _health -= _bullet.damage - _bullet.damage / 100 * _armor;
 
-            if (health <= 0)
+            if (_health <= 0)
             {
                 StartCoroutine(Death());
             }
@@ -70,20 +69,13 @@ public class BossController : MonoBehaviour
         agent.enabled = false;
         canMove = false;
         _col.isTrigger = true;
-        _bossAttack.punchCollider.enabled = false;
+        BossAttack.punchCollider.enabled = false;
         animator.Play("Death");
-        ScoreSystem.score += point;
-        ScoreSystem.totalScore += point;
-        ScoreSystem.scoreText.text = $"Score = {ScoreSystem.score}";
-        
-        yield return new WaitForSeconds(delayTime);
-        EndGame();
-    }
+        ScoreSystem.score += _point;
+        SpawnSystem.mobsSum = 0;
+        bossesKilled++;
 
-    private void EndGame()
-    {
-        _interface.EndGameScreen(ResultScreen.win);
-        _interface.StopAllCoroutines();
-        PlayerController.isLife = false;
+        yield return new WaitForSeconds(_delayTime);        
+        Destroy(gameObject);
     }
 }

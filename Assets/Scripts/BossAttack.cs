@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class BossAttack : MonoBehaviour
 {
-    [SerializeField]
-    private AnimationClip _punchClip;
-    [SerializeField]
-    private ParticleSystem _blood;
-
-    public BossController bossController;
-    public Collider punchCollider;
+    [SerializeField] private AnimationClip _punchClip;
+    [SerializeField] private ParticleSystem _blood;
+    [SerializeField] private BossController _bossController;
+    
+    public static Collider punchCollider;
     private Interface _interface;
 
     void Start()
@@ -19,14 +17,15 @@ public class BossAttack : MonoBehaviour
     }
     public IEnumerator Attack()
     {
-        bossController.canMove = false;
-        bossController.agent.enabled = false;
+        BossController.canMove = false;
+        _bossController.agent.enabled = false;
         punchCollider.isTrigger = true;
-        bossController.animator.Play("Attack");
+        _bossController.animator.Play("Attack");
+
         yield return new WaitForSeconds(_punchClip.length);
         punchCollider.isTrigger = false;
-        bossController.canMove = true;
-        bossController.agent.enabled = true;
+        BossController.canMove = true;
+        _bossController.agent.enabled = true;
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -35,7 +34,7 @@ public class BossAttack : MonoBehaviour
         {
             punchCollider.isTrigger = false;
             _blood.Play();
-            _interface.healthSlider.value -= bossController.damage;
+            _interface.healthSlider.value -= _bossController.damage;
         }
     }
 }

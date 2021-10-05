@@ -188,6 +188,7 @@ MonoBehaviour:
   _hand: {fileID: 0}
   _camera: {fileID: 0}
   _interface: {fileID: 0}
+  _instBullet: {fileID: 0}
 --- !u!114 &309591411169944388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2446,6 +2447,11 @@ PrefabInstance:
     - target: {fileID: 495698, guid: 1d8e61deede12df46b37e582ad640c5c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -80.95999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624811387049453919, guid: 1d8e61deede12df46b37e582ad640c5c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d8e61deede12df46b37e582ad640c5c, type: 3}

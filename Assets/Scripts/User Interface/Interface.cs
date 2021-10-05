@@ -6,39 +6,24 @@ using UnityEngine.UI;
 
 public class Interface : MonoBehaviour
 {
+    [SerializeField] private MusicController _music;
+    [SerializeField] private GameObject _scorePanel;
+    [SerializeField] private GameObject _resultPanel;
+
+    public Slider healthSlider;
     public Slider ammoSlider;
     public Text ammoText;
-    public Slider healthSlider;
-    public GameObject scorePanel;
-    public ScoreSystem scoreSystem;
-    public GameObject resultPanel;
-    public ResultScreen resultScreen;
-    public GameObject shopPanel;
-    public float shopOpenTime = 20;
-    public float shopCloseTime = 8;
 
     private void Start()
     {
-        shopPanel.SetActive(false);
-        resultPanel.SetActive(false);
-        StartCoroutine(OpenShop());
+        _resultPanel.SetActive(false);
     }
 
-    IEnumerator OpenShop()
+    public void EndGameScreen()
     {
-        yield return new WaitForSeconds(shopOpenTime);
-        shopPanel.SetActive(true);
-
-        yield return new WaitForSeconds(shopCloseTime);
-        shopPanel.SetActive(false);
-        InstBullet.canShoot = true;
-        StartCoroutine(OpenShop());
-    }
-
-    public void EndGameScreen(string endText)
-    {
-        resultPanel.SetActive(true);
-        resultScreen.winOrLoseText.text = endText;
+        _music.StopClip();
+        _music.PlayClip(5);
+        _resultPanel.SetActive(true);
         PlayerController.animator.SetFloat("Run", 0);
         PlayerController.animator.SetFloat("Strafe", 0);
     }

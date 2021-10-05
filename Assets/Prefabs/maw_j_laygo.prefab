@@ -1091,15 +1091,14 @@ MonoBehaviour:
   _bullet: {fileID: 7345177096824927254, guid: ce30da7200077674cb87c56c5c563076, type: 3}
   _distanceToTarget: 4.5
   animator: {fileID: 5217305236852902925}
-  speed: 2
-  health: 600
-  armor: 90
-  point: 50
-  damage: 35
-  delayTime: 6
-  canMove: 1
-  _target: {fileID: 0}
+  speed: 2.1
+  health: 500
+  armor: 50
+  point: 30
+  damage: 30
+  delayTime: 7
   agent: {fileID: -5853550274202857668}
+  canMove: 1
 --- !u!1 &4962524086403756492
 GameObject:
   m_ObjectHideFlags: 0

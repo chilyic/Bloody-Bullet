@@ -12,7 +12,7 @@ public class EnemyPunch : MonoBehaviour
 
     private Interface _interface;
     
-    void Start()
+    private void Start()
     {
         _interface = FindObjectOfType<Interface>();
     }

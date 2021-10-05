@@ -5,14 +5,13 @@ using UnityEngine;
 public class SpawnSystem : MonoBehaviour
 {
     [SerializeField] private SpawnPoint[] _spawnPoint;
-    [SerializeField] private WaveStarter _waveStarter;    
-    
-    public int delayBetweenWaves = 20;
+    [SerializeField] private WaveStarter _waveStarter;
+    [SerializeField] private int _delayBetweenWaves = 20;
 
     private int _wave;
     private int _randTime;
     private int _randPoint;
-    private int _mobsSum;
+    public static int mobsSum;
     
     private IEnumerator Spawn(int wave, int minTime, int maxTime)
     {
@@ -21,7 +20,7 @@ public class SpawnSystem : MonoBehaviour
         yield return new WaitForSeconds(_randTime);
 
         if (PlayerController.isLife)
-            if (_mobsSum > 0)
+            if (mobsSum > 0)
             {
                 _randPoint = Random.Range(0, _spawnPoint.Length);
                 while (_spawnPoint[_randPoint].mobsCount == 0)
@@ -30,25 +29,25 @@ public class SpawnSystem : MonoBehaviour
                 }
 
                 _spawnPoint[_randPoint].SpawnEnemy(_wave);
-                _mobsSum--;
+                mobsSum--;
 
                 StartCoroutine(Spawn(_wave, minTime, maxTime));
             }
             else
             {
                 StopAllCoroutines();
-                Invoke(nameof(DelayNextWave), delayBetweenWaves);
+                Invoke(nameof(DelayNextWave), _delayBetweenWaves);
             }
     }
 
 
-    public void NewWave(int mobsLight, int mobsHard, int wave, int minTime, int maxTime)
+    public void NewWave(int mobs, int wave, int minTime, int maxTime)
     {
-        _mobsSum = (mobsLight + mobsHard) * _spawnPoint.Length;
+        mobsSum = mobs * _spawnPoint.Length;
 
         for (int i = 0; i < _spawnPoint.Length; i++)
         {
-            _spawnPoint[i].MobsData(mobsLight, mobsHard);
+            _spawnPoint[i].MobsData(mobs);
         }
         StartCoroutine(Spawn(wave, minTime, maxTime));
     }

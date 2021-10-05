@@ -511,16 +511,18 @@ MonoBehaviour:
   _ep: {fileID: 6160978948404115646}
   _bullet: {fileID: 7345177096824927254, guid: ce30da7200077674cb87c56c5c563076, type: 3}
   _distanceToTarget: 1.4
+  _boxes:
+  - {fileID: 183502, guid: 4656138d9606a80408030bdc231b1233, type: 3}
+  - {fileID: 154622, guid: 464802a8183dc9348be0c5e743e5e792, type: 3}
+  agent: {fileID: 9028128017192912475}
   animator: {fileID: -2069763896898612328}
-  speed: 2.5
+  speed: 3.2
   health: 100
   armor: 30
   point: 5
-  damage: 15
-  delayTime: 2
+  damage: 30
+  destroyDelayTime: 2
   canMove: 1
-  _target: {fileID: 0}
-  agent: {fileID: 9028128017192912475}
 --- !u!195 &9028128017192912475
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -531,7 +533,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2.5
+  m_Speed: 3.2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1434,6 +1436,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Blood
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618354897971704622, guid: 8ae2654c0702e254faaf3864358597fb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7465695492591249182, guid: 8ae2654c0702e254faaf3864358597fb,
         type: 3}

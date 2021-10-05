@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class MenuSound : MonoBehaviour
 {
-    public AudioSource sound;
-    public AudioClip[] Fx;
-    
+    [SerializeField] private AudioSource _sound;
+    [SerializeField] private AudioClip[] _Fx;    
 
     public void OnEnter()
     {
-        sound.PlayOneShot(Fx[0]);
+        _sound.PlayOneShot(_Fx[0]);
     }
 
     public void OnClic()
     {
-        sound.PlayOneShot(Fx[1]);
+        _sound.PlayOneShot(_Fx[1]);
     }
 }

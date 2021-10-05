@@ -5,16 +5,13 @@ using UnityEngine.UI;
 
 public class ScoreSystem : MonoBehaviour
 {
-    public static int score = 10;
-    public static int totalScore;
-    public static Text scoreText;
-    
+    public static int score;
+    public static Text scoreText;    
 
     private void Start()
     {
+        score = 0;
         scoreText = GetComponent<Text>();
-        scoreText.text = $"Score = {score}";
-        totalScore = score;
+        scoreText.text = $"{score}";
     }
-    
 }

@@ -127,18 +127,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea78aca390ad6514f91a098ae3a41388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
-  speed: 15
   _explosion: {fileID: 5814572877665693122}
-  _audioSource: {fileID: 5908795884077903284}
-  _audioClips:
-  - {fileID: 8300000, guid: 5b9e7c9fb1ed6854e85466b79ea9454e, type: 3}
-  - {fileID: 8300000, guid: 626caecd0cb015c4a93289180362e833, type: 3}
-  - {fileID: 8300000, guid: 589f4f4f4a8fb014596037ab08cdf731, type: 3}
-  - {fileID: 8300000, guid: d12025069c977b34c9727ac4685b08bb, type: 3}
   _sparks: {fileID: 5194623314942422256}
   _stoneDust: {fileID: 515894844859440032}
-  mesh: {fileID: 2422915654040836680}
+  _audioSource: {fileID: 5908795884077903284}
+  _audioClips:
+  - {fileID: 8300000, guid: 54eae58489f2f8848a88ed71067831a4, type: 3}
+  - {fileID: 8300000, guid: 17804faa34795414680e40eca2156a9b, type: 3}
+  - {fileID: 8300000, guid: 8a56f6c43c8f97445bc2663897e579e3, type: 3}
+  - {fileID: 8300000, guid: c0a5af3b497ceb544a18e0b0f067adf5, type: 3}
+  _mesh: {fileID: 2422915654040836680}
+  _speed: 15
+  damage: 20
 --- !u!82 &5908795884077903284
 AudioSource:
   m_ObjectHideFlags: 0
@@ -151,7 +151,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.264
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
